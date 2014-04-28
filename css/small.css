@@ -1,0 +1,37 @@
+/* small phone screens iPhone */
+
+@media (max-width: 320px){
+	.some.ui-content{
+		margin-bottom: 60px;
+		
+	}
+
+	#guestreserve, #reserve, #cancel{
+		max-width: 250px !important;
+	}
+	
+	*{
+		font-size: 12px;
+	}
+	
+	#feed  h2, #userreserve h2{
+		font-size: 12px;
+	
+	}
+
+	.ui-panel{
+		font-size: 14px;
+	}
+	
+	.ui-footer .ui-btn-inner {
+		padding: 1px !important;
+	}
+	.ui-footer .ui-btn-text{
+		font-size: 12px;
+		padding: 5px;
+	}
+	
+	#signup .ui-header .ui-btn-inner{
+	
+	}
+}

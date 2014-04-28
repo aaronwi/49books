@@ -1,0 +1,126 @@
+/* 49 Books CSS */
+html, body{
+	height: 100%;
+}
+
+/***************GENERAL STYLING ***************/
+.clear-fix{
+	clear: both;
+}
+
+#feed img, #userreserve img{
+	width: 42px;
+	height: 62px;
+	border: 1px solid #999;
+	margin-left: 15px;
+	margin-top: 5px;
+	padding: 3px 10px 3px 10px;
+}
+
+/************* LOGIN PAGE STYLING **************/
+#login footer{
+	bottom:0; 
+	position:absolute !important; 
+	top: auto !important; 
+	width:100%;
+}
+
+#signin .ui-input-text{
+	width: 60%;
+}
+
+#signin .ui-block-a{
+	width: 32%;
+
+}
+
+#signin .ui-block-b{
+	width: 68%; /* 360 px wide screen target / ref = result 270 px */\
+}
+
+#signin .ui-btn{
+	width: 140% !important;
+
+}
+
+#signin .ui-grid-solo{
+	width: auto;
+	padding-left: 30.5%;
+}
+
+
+/******************** UNIVERSAL USER FEED STYLING **********/
+@media all{
+	.feed-header-grid{
+		padding: 10px 0px 10px 0px;
+	}
+	
+	.feed-header-grid.ui-grid-b .ui-block-a { 
+		width: 10%; 
+		margin-left: 15px;
+	}
+    .feed-header-grid.ui-grid-b .ui-block-b { 
+		width: 60%;
+		margin-top: 5px;
+	}
+    
+	.feed-header-grid.ui-grid-b .ui-block-c {
+		width: 30%;
+		margin-top: 5px;
+	}
+	
+}  
+
+.my-signgrid.ui-grid-a .ui-block-a{
+	width: 30%;
+}
+
+.my-signgrid.ui-grid-a .ui-block-b{
+	width:70%;
+}
+
+
+/***************USER ACCOUNT STYLING ***************/
+.acct-header-grid{
+		
+}
+	
+.acct-header-grid.ui-grid-b .ui-block-a { 
+		width: 15%; 
+		margin-top: 5px;
+}
+.acct-header-grid.ui-grid-b .ui-block-b { 
+		width: 70%;
+		margin-top: 5px;
+		padding:0;
+}
+    
+.acct-header-grid.ui-grid-b .ui-block-c {
+		width: 15%;
+		margin-top: 5px;
+}
+	
+.page #userinfo table{
+	max-width: 400px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	border-collapse: collapse;
+	
+}
+
+.manage-footer.ui-btn .ui-btn-inner {
+    padding-top: 40px !important; 
+}
+.manage-footer.ui-btn .ui-icon { 
+    width: 45px!important; 
+    height: 35px!important; 
+    margin-left: -24px !important; 
+    box-shadow: none!important; 
+    -moz-box-shadow: none!important; 
+    -webkit-box-shadow: none!important;
+    -webkit-border-radius: none !important;
+    border-radius: none !important; 
+}
+
