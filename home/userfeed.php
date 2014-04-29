@@ -16,6 +16,25 @@ require_once("../../mysqli_connect.php");
 
 <link rel="stylesheet" href="../css/style.css" type="text/css" @media only screen and (max-width:320px)/>
 <link rel="stylesheet" href="../css/small.css" type="text/css" />
+
+<script type="text/javascript">
+		var reservedBook = "";
+		function reserveBook()
+		{
+			$.get("reserve.php, {isbn : 5});
+
+			return false;
+		}
+		
+		function setBook(book)
+		{
+			reservedBook = book;
+			alert(reservedBook);
+			
+			return false;
+		}
+</script>
+
 </head>
 
 <body>
@@ -119,7 +138,7 @@ require_once("../../mysqli_connect.php");
 							<p><strong>" . $row['title'] . "</strong></p>
 							<p>by <strong>" . $row['authorlast'] . ", " . $row['authorfirst'] . "</strong></p>
 							<p style='text-align:right; position: relative; bottom: 21.95px; color: #666;'><strong>$" . number_format($row['price'], 2) . "</strong></p></a>
-							<a href='#reserve' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='check'>Reserve Item</a>
+							<a href='#reserve' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='check' onclick='setBook(" . $row['isbn'] . ")'>Reserve Item</a>
 						</li>";
 						}
 				
@@ -143,14 +162,14 @@ require_once("../../mysqli_connect.php");
 		<div role="main" class="ui-content">
 			<h4 class="ui-title">Are you sure you want to reserve this book?</h4>
 				<p>You can review all of the books you have reserved by clicking the "Reserved Books" option from the main menu.</p>
-					<!--<center><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Reserve</a>
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>-->
-					<center>
+					<center><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow" onclick="reserveBook()">Reserve</a>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
+					<!--<center>
 					<form id="searchform" action="reserve.php" method="post">
 					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
 					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
 					</form>
-					</center>
+					</center>-->
 						
 						
 		</div>
