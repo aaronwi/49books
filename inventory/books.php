@@ -79,7 +79,7 @@ if (!isset($_SESSION['accttype'])){
 								#echo "<td><a href=updateuser.php?isbn=".$row['isbn'].">Update</a></td>";
 							}
 
-							echo "</table>"; 
+							echo "</table></center>"; 
 							mysqli_free_result ($result); // Free up the resources.         
 							mysqli_close($con); // Close the database connection.
 
