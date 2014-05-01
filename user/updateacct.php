@@ -2,6 +2,9 @@
 session_start(); 
 require_once("../../mysqli_connect.php");
 $email = $_SESSION["email"];
+$query = "SELECT * FROM users WHERE email='$email'"; 
+$result = mysqli_query($con, $query);				
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 if (isset($_POST['submitted']))
 {
@@ -123,7 +126,7 @@ else
 			<form id="updateinfo" action="updateacct.php" method="post" data-ajax="false">
 			<div style="padding:10px 10px;">
 			<?php	
-			if (!isset($_POST['submitted'])) {?>
+			if (isset($_POST['submitted'])) {?>
 				<div class="ui-field-contain">
 					<label for="firstname">First Name:</label>
 					<input type="text" name="firstname" id="firstname" placeholder="John" data-theme="a" data-clear-btn="true" size="10" value="<?php echo $_POST['firstname']; ?>" />
@@ -166,42 +169,42 @@ else
 				<?php } else { ?>
 								<div class="ui-field-contain">
 					<label for="firstname">First Name:</label>
-					<input type="text" name="firstname" id="firstname" placeholder="John" data-theme="a" data-clear-btn="true" size="10" value="<?php echo $_POST['firstname']; ?>" />
+					<input type="text" name="firstname" id="firstname" placeholder="John" data-theme="a" data-clear-btn="true" size="10" value="<?php echo $row['firstname']; ?>" />
 				</div>
 				
 				<div class="ui-field-contain">
 					<label for="lastname">Last Name:</label>
-					<input type="text" name="lastname" id="lastname" placeholder="Doe" data-theme="a" data-clear-btn="true" value="<?php echo $_POST['lastname']; ?>"/>			
+					<input type="text" name="lastname" id="lastname" placeholder="Doe" data-theme="a" data-clear-btn="true" value="<?php echo $row['lastname']; ?>"/>			
 				</div>
 				
 				<div class="ui-field-contain">
 					<label for="phone">Phone: </label>
-					<input type="tel" name="phonenumber" id="phonenumber" placeholder="eg 555-555-5555" data-theme="a" data-clear-btn="true" value="<?php echo $_POST['phonenumber']; ?>"/>				
+					<input type="tel" name="phonenumber" id="phonenumber" placeholder="eg 555-555-5555" data-theme="a" data-clear-btn="true" value="<?php echo $row['phonenumber']; ?>"/>				
 				</div>
 				<!--
 				<div class="ui-field-contain">
 					<label for="email">Email: </label>
-					<input type="email" name="email" id="email" placeholder="doejohn@example.com" data-theme="a" data-clear-btn="true" value="<?php echo $_POST['email']; ?>"/>
+					<input type="email" name="email" id="email" placeholder="doejohn@example.com" data-theme="a" data-clear-btn="true" value="<?php echo $row['email']; ?>"/>
 				</div>
 				-->
 				<div class="ui-field-contain">
 					<label for="street"> Street: </label>
-					<input type="text" name="street" id="street" placeholder="e.g. 123 Center St." data-theme="a" data-clear-btn="true" value="<?php echo $_POST['street']; ?>"/>
+					<input type="text" name="street" id="street" placeholder="e.g. 123 Center St." data-theme="a" data-clear-btn="true" value="<?php echo $row['street']; ?>"/>
 				</div>
 				
 				<div class="ui-field-contain">
 					<label for="city"> City: </label>
-					<input type="text" name="city" id="city" placeholder="e.g. Milwaukee" data-theme="a" data-clear-btn="true" value="<?php echo $_POST['city']; ?>"/>
+					<input type="text" name="city" id="city" placeholder="e.g. Milwaukee" data-theme="a" data-clear-btn="true" value="<?php echo $row['city']; ?>"/>
 				</div>
 				
 				<div class="ui-field-contain">
 					<label for="state"> State: </label>
-					<input type="text" name="state" id="state" placeholder="e.g. Wisconsin" data-theme="a" data-clear-btn="true" value="<?php echo $_POST['state']; ?>"/>
+					<input type="text" name="state" id="state" placeholder="e.g. Wisconsin" data-theme="a" data-clear-btn="true" value="<?php echo $row['state']; ?>"/>
 				</div>
 				
 				<div class="ui-field-contain">
 					<label for="zip"> Zipcode: </label>
-					<input type="number" name="zip" id="un" placeholder="53204" data-theme="a" data-clear-btn="true" pattern="\d*" value="<?php echo $_POST['zip']; ?>"/>
+					<input type="number" name="zip" id="un" placeholder="53204" data-theme="a" data-clear-btn="true" pattern="\d*" value="<?php echo $row['zip']; ?>"/>
 				</div>				
 				
 				<?php } ?>

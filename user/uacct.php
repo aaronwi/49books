@@ -130,7 +130,7 @@ USER ACCOUNT PAGE
 					<p style='text-align:right; position: relative; bottom: 21.95px; color: #666;'><strong>$" . number_format($row['price'], 2) . "</strong></p></a>
 					
 
-					<a href='#cancel' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='delete'>Reserve Item</a>
+					<a href='#cancel' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='delete' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Cancel Item</a>
 					
 				</li>";
 			}
@@ -146,7 +146,7 @@ USER ACCOUNT PAGE
 		<div role="main" class="ui-content">
 			<h4 class="ui-title">Are you sure you want to cancel your reserve request for this item?</h4>
 				<p>You will no longer be able to pick up this item if it is requested by another user.</p>
-					<center><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-mini="true" data-rel="back" data-transition="flow">Yes</a>
+					<center><a href="#" id="cancelBook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-mini="true" data-rel="back" data-transition="flow">Yes</a>
 						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b"  data-mini="true" data-rel="back">No</a></center>
 						
 		</div>
@@ -189,7 +189,14 @@ USER ACCOUNT PAGE
 					<li><a href="#" data-role="button" data-icon="gear" data-iconpos="top">Update Info</a></li>
 						</ul>
 	</footer>
-</div>
-<!-------------------------
- END USER ACCOUNT PAGE 
- -------------------------->
+</div>-->
+ 
+ <script type="text/javascript">
+	$('#cancelBook').click(function(){
+		var isbn = sessionStorage.getItem('isbn');
+		$.post( "../inventory/cancelbook.php" , { isbn: isbn} );
+		location.reload(true);
+	});
+</script>
+ </body>
+ </html>
