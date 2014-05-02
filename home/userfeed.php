@@ -27,7 +27,7 @@ require_once("../../mysqli_connect.php");
 	<section data-role="panel" id="panel" data-position="right" data-display="overlay">
 		<ul data-role="listview">
 			<li data-role="list-divider">Browse Catalog</li>
-			<li><form id="searchform" action="search.php" method="post">
+			<li><form id="searchform" action="userfeed.php" method="post">
 			<input type="search"  name="title" id="search" placeholder="Title" data-clear-btn="true" />
 			<input type="search"  name="author" id="search" placeholder="Author" data-clear-btn="true" />
 			<input type="search"  name="isbn" id="search" placeholder="ISBN" data-clear-btn="true" />
@@ -173,8 +173,8 @@ require_once("../../mysqli_connect.php");
 <script type="text/javascript">
 	$('#reserveBook').click(function(){
 		var isbn = sessionStorage.getItem('isbn');
-		$.post( "../inventory/reservebook.php" , { isbn: isbn} );
-		location.reload(true);
+		$.post( "../inventory/reservebook.php" , { isbn: isbn});
+
 	});
 </script>
 </body>

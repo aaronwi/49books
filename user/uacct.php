@@ -44,7 +44,7 @@ USER ACCOUNT PAGE
 	
 	<header data-role="header" id="head3" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
-			<a href="userfeed.php" data-role="button" data-icon="home" data-iconpos="notext" data-inline="true" class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
+			<a href="../home/userfeed.php" data-role="button" data-icon="home" data-iconpos="notext" data-inline="true" class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
 		</div>
 		
 		<div class="ui-block-b">
