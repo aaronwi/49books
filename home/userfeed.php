@@ -173,7 +173,10 @@ require_once("../../mysqli_connect.php");
 <script type="text/javascript">
 	$('#reserveBook').click(function(){
 		var isbn = sessionStorage.getItem('isbn');
-		$.post( "../inventory/reservebook.php" , { isbn: isbn});
+		$.post(
+			"../inventory/reservebook.php",
+			{ isbn: isbn }
+		);
 
 	});
 </script>
