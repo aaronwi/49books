@@ -2,16 +2,13 @@
 session_start();
 require_once ('../../mysqli_connect.php');
 
-//$isbn = $_GET['isbn'];
-$isbn = $_POST['isbn'];
-$user_id = $_SESSION['user_id'];
+$isbn = $_GET['isbn'];
+//$isbn = $_POST['isbn'];
+
 ?>
 <html>
 <body>
 <?php
-if (isset($_POST['isbn']))
-{
-	
 	$query = "SELECT * FROM books WHERE isbn=$isbn";
 	$result = mysqli_query ($con, $query) or die(mysqli_error($con));
 	$row = mysqli_fetch_array($result, MYSQL_ASSOC);
@@ -24,7 +21,6 @@ if (isset($_POST['isbn']))
 	{
 		echo '<p>There is no such book.</p>';
 	}
-}
 
 ?>
 </body>

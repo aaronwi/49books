@@ -103,34 +103,57 @@ ADMIN INVENTORY PAGE
 	</header>
 	
 	<section data-role="content" class="ui-content">
-	<h5 style="text-align: center; font-style:italic; padding: 5px auto 5px auto;" >Choose books(s) to manage:</h5>
+	<h5 style="text-align: center; font-style:italic; padding: 5px auto 5px auto;" >Book Reserve Request</h5>
 			<fieldset data-role="controlgroup">
-				<legend>Book Reserve Request</legend>
-					<input type="checkbox" name="checkbox-1a" id="checkbox-1a"/>
-					<label for="checkbox-1a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-2a" id="checkbox-2a"/>
-					<label for="checkbox-2a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-3a" id="checkbox-3a"/>
-					<label for="checkbox-3a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-4a" id="checkbox-4a"/>
-					<label for="checkbox-4a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-5a" id="checkbox-5a"/>
-					<label for="checkbox-5a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-6a" id="checkbox-6a"/>
-					<label for="checkbox-6a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-7a" id="checkbox-7a"/>
-					<label for="checkbox-7a">Book Title for Last, First</label>
-					<input type="checkbox" name="checkbox-8a" id="checkbox-8a"/>
-					<label for="checkbox-8a">Book Title for Last, First</label>
-			</fieldset>
-	
+					<?php	
+							$query = "SELECT books.reservationid, books.authorfirst, books.authorlast, books.title, books.price, books.isbn, users.user_id, users.firstname, users.lastname
+										FROM books 
+										INNER JOIN users 
+										ON books.reservationid=users.user_id 
+										ORDER BY books.reservationid"; 
+
+
+							$result = mysqli_query($con, $query) or die (mysqli_error($con));
+
+							//Table header:
+							echo "<center>";					
+							echo "<table data-role=\"table\"  data-mode=\"columntoggle\" id=\"books_table\" class=\"ui-responsive table-stripe my-custom-class\"  data-column-btn-theme=\"b\" data-column-btn-text=\"Change data display\" data-column-popup-theme=\"a\">
+							<thead>
+							<tr>							
+								<th data-priority=\"2\">Author Name</th>
+								<th data-priority=\"1\">Book Title</th>
+								<th data-priority=\"3\">Price</th>
+								<th data-priority=\"4\">Reserved By</th>
+								<th>Cancel</th>
+								<th>Fill</th>
+							</tr>
+							</thead>";
+							echo "</center>";
+											
+							//Fetch and Print all records ....				
+							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+							{
+								echo "<tr><td><strong>".$row['authorlast'].", ".$row['authorfirst']."</strong></td>";
+								echo "<td>".$row['title']."</td>";
+								echo "<td>". number_format($row['price'], 2)."</td>";
+								echo "<td>" . $row['lastname'] . " " .$row['firstname']."</td>";
+								echo "<td><a href=cancelbook.php?isbn=".$row['isbn'].">Cancel</a></td>";
+								echo "<td><a href=deletebook.php?isbn=".$row['isbn'].">Fill</a></td></tr>";
+							}
+
+							echo "</table>"; 
+							mysqli_free_result ($result); // Free up the resources.         
+							mysqli_close($con); // Close the database connection.
+
+				?>	
+		<!--<ul> 
+            <li><input type="button" data-icon="edit" data-iconpos="top" value="Mark Filled" /></li> 
+			<li><input type="button" data-icon="forbidden" data-iconpos="top" value="delete" class="delete" /></li> 
+        </ul>-->
 	<footer data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false" class="manage-footer ui-grid-b">
 	<div data-role="navbar" class="manage-footer">
             
-            <ul> 
-                <li><input type="button" data-icon="edit" data-iconpos="top" value="Mark Filled" /></li> 
-				<li><input type="button" data-icon="forbidden" data-iconpos="top" value="delete" class="delete" /></li> 
-            </ul>
+            
 	</div>
 	</footer>
  </div>

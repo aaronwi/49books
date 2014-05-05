@@ -1,6 +1,6 @@
-	<?php
+<?php
 session_start(); 
-//check session first
+
 if (!isset($_SESSION['accttype'])){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
@@ -44,7 +44,7 @@ if (!isset($_SESSION['accttype'])){
 
 	<header data-role="header" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
-			<a href="#"
+			<a href="inventory.php"
 				data-rel="back" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
 				class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
 		</div>
@@ -63,25 +63,35 @@ if (!isset($_SESSION['accttype'])){
 	<section data-role="content" class="ui-content">
 	<h5 style="text-align: center; font-style:italic;" >Choose item(s) to manage:</h5>
 				<?php	
-							$query = "SELECT * FROM books"; 
-							$result = mysqli_query($con, $query) or die (mysqli_error($con));
+					$query = "SELECT * FROM books"; 
+					$result = mysqli_query($con, $query) or die (mysqli_error($con));
 
-							//Table header:
-							echo "<center><table cellpadding=5 cellspacing=5 border=1>
-							<tr><th>Last, First Name </th><th>Book Title</th><th>Price</th><th>Delete</th></tr></center>";
-											
-							//Fetch and Print all records ....				
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-								echo "<tr><td><strong>".$row['authorlast']." , ".$row['authorfirst']."</strong></td<br>";
-								echo "<td>".$row['title']."</td><br>";
-								echo "<td>". number_format($row['price'], 2)."</td><br>";
-								echo "<td><a href=deletebook.php?isbn=".$row['isbn'].">Delete</a></td>";
-								#echo "<td><a href=updateuser.php?isbn=".$row['isbn'].">Update</a></td>";
-							}
+					echo "<center><table data-role=\"table\"  data-mode=\"columntoggle\" id=\"books_table\" class=\"ui-responsive table-stripe my-custom-class\"  data-column-btn-theme=\"b\" data-column-btn-text=\"Change data display\" data-column-popup-theme=\"a\">
+					
+					<thead>
+							<tr>							
+								<th data-priority=\"2\">Author Name</th>
+								<th data-priority=\"1\">Book Title</th>
+								<th data-priority=\"3\">Price</th>
+								<th>Delete</th>
+								<!--<th>Update</th>-->
+							</tr>
+					</thead>					
+					
+					</center>";
+									
+					while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+					{
+						echo "<tr><td>".$row['authorlast'].", ".$row['authorfirst']."</td>";
+						echo "<td>".$row['title']."</td>";
+						echo "<td>". number_format($row['price'], 2)."</td>";
+						echo "<td><a href=deletebook.php?isbn=".$row['isbn'].">Delete</a></td></tr>";
+						#echo "<td><a href=updateuser.php?isbn=".$row['isbn'].">Update</a></td>";
+					}
 
-							echo "</table></center>"; 
-							mysqli_free_result ($result); // Free up the resources.         
-							mysqli_close($con); // Close the database connection.
+					echo "</table></center>"; 
+					mysqli_free_result ($result); // Free up the resources.         
+					mysqli_close($con); // Close the database connection.
 
 				?>	
 	<footer data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false" class="manage-footer ui-grid-c">

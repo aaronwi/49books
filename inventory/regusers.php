@@ -64,87 +64,44 @@ USERS PAGE
 	<section data-role="content" class="ui-content">
 	<h5 style="text-align: center; font-style:italic; padding: 5px auto 5px auto;" >Choose users(s) to manage:</h5>
 			<fieldset data-role="controlgroup">
-				<center><legend>49 Books Registered Users</legend></center>
 
 						<?php	
-							//Set the number of records to display per page
-							$display = 5;
-							//Check if the number of required pages has been determined
-							if(isset($_GET['p'])&&is_numeric($_GET['p'])){//Already been determined
-								$pages = $_GET['p'];
-							}else{//Need to determine
-									//Count the number of records;
-									$query = "SELECT COUNT(user_id) FROM users";
-									$result = @mysqli_query($con, $query); 
-									$row = @mysqli_fetch_array($result, MYSQL_NUM);
-									$records = $row[0]; //get the number of records
-									//Calculate the number of pages ...
-									if($records > $display){//More than 1 page is needed
-									$pages = ceil($records/$display);
-									}else{
-										$pages = 1;
-									}
-								}// End of p IF.
-
-							//Determine where in the database to start returning results ...
-							if(isset($_GET['s'])&&is_numeric($_GET['s'])){
-								$start = $_GET['s'];
-							}else{
-								$start = 0;
-							}
 							
-							//Make the paginated query;
-							$query = "SELECT * FROM users LIMIT $start, $display"; 
+							$query = "SELECT * FROM users"; 
 							$result = mysqli_query($con, $query) or die (mysqli_error($con));
-							
-							//Table header:
+						
 							echo "<center>";					
-							echo "<table cellpadding=5 cellspacing=5 border=1><tr>
-							<th>Last, First Name </th><th>Email</th><th>User type</th><th>Phonenumber</th><th>Delete</th><th>Update</th></tr>";
+							echo "<table data-role=\"table\"  data-mode=\"columntoggle\" id=\"books_table\" class=\"ui-responsive table-stripe my-custom-class\"  data-column-btn-theme=\"b\" data-column-btn-text=\"Change data display\" data-column-popup-theme=\"a\">
+							<thead>
+							<tr>							
+								<th data-priority=\"2\">First Name</th>
+								<th data-priority=\"1\">Last Name</th>
+								<th data-priority=\"3\">Email</th>
+								<th data-priority=\"4\">User Type</th>
+								<th data-priority=\"4\">Phone</th>
+								<th>Delete</th>
+								<th>Update</th>
+							</tr>
+							</thead>";
 							echo "</center>";
-											
-							//Fetch and Print all records ....				
-							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-								echo "<tr><td><strong>".$row['lastname']." , ".$row['firstname']."</strong></td<br>";
-								echo "<td>".$row['email']."</td><br>";
-								echo "<td>".$row['accttype']."</td><br>";
-								echo "<td>".$row['phonenumber']."</td><br>";
+							
+							
+							while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+							{
+								echo "<tr><td><strong>".$row['firstname']."</strong></td>";
+								echo "<td><strong>".$row['lastname']."</strong></td>";
+								echo "<td>".$row['email']."</td>";
+								echo "<td>" . ($row['accttype'] == 'admin' ? 'admin' : 'user') . "</td>";
+								echo "<td>".$row['phonenumber']."</td>";
 								echo "<td><a href=deleteuser.php?user_id=".$row['user_id'].">Delete</a></td>";
-								echo "<td><a href=updateuser.php?user_id=".$row['user_id'].">Update</a></td>";
-							}// End of While staement 
+								echo "<td><a href=updateuser.php?user_id=".$row['user_id'].">Update</a></td></tr>";
+							}
 
-							echo "</table>"; 
+							echo "</table></center>"; 
 							mysqli_free_result ($result); // Free up the resources.         
 							mysqli_close($con); // Close the database connection.
-
-							//Make the links to other pages if necessary.
-							if($pages>1){
-									echo '<br/><table><tr>';
-									//Determine what page the script is on:
-									$current_page = ($start/$display) + 1;
-									//If it is not the first page, make a Previous button:
-									if($current_page != 1){
-										echo '<td><a href="regusers.php?s='. ($start - $display) . '&p=' . $pages. '"> Previous </a></td>';
-									}
-									//Make all the numbered pages:
-									for($i = 1; $i <= $pages; $i++){
-										if($i != $current_page){ // if not the current pages, generates links to that page
-											echo '<td><a href="regusers.php?s='. (($display*($i-1))). '&p=' . $pages .'"> ' . $i . ' </a></td>';
-										}else{ // if current page, print the page number
-											echo '<td>'. $i. '</td>';
-										}
-									} //End of FOR loop
-									//If it is not the last page, make a Next button:
-									if($current_page != $pages){
-									echo '<td><a href="regusers.php?s=' .($start + $display). '&p='. $pages. '"> Next </a></td>';
-									}
-		
-								echo '</tr></table>';  //Close the table.
-							}//End of pages links
 						
 						?>
-					<!-- <input type="checkbox" name="checkbox-8a" id="checkbox-8a"/> -->
-					<!-- <label for="checkbox-8a">Last, First</label> -->
 			</fieldset>
 	
 	<footer data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false" class="manage-footer ui-grid-c">

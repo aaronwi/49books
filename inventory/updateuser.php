@@ -72,7 +72,6 @@ if (!isset($_SESSION['accttype'])){
 	} 
 
 }
-mysqli_close($con);
 
 ?>
 <!DOCTYPE html>
@@ -175,3 +174,6 @@ mysqli_close($con);
  
  </body>
  </html>
+ <?php
+ }
+ ?>
