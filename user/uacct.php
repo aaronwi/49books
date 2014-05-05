@@ -33,7 +33,7 @@ USER ACCOUNT PAGE
 				if ($_SESSION["accttype"] == "admin")
 				{
 					echo	"<li data-role='list-divider'>Administration</a></li>";
-					echo "<li><a href='inventory.php' class='ui-icon-gear'>Manage Inventory & Users</a></li>	";
+					echo "<li><a href='../inventory/inventory.php' class='ui-icon-gear'>Manage Inventory & Users</a></li>";
 				}
 			?>
 			<li data-role="list-divider">General</a></li>

@@ -1,61 +1,64 @@
 <?php
-session_start(); 
-//check session first
-if (!isset($_SESSION['accttype'])){
+session_start();
+require_once('../../mysqli_connect.php');
+
+if (!isset($_SESSION['accttype']))
+{
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
-
-} else {
-
-	if(isset($_POST['submitted'])) {
-	      require_once('../../mysqli_connect.php'); //connect to the DB
+}
+else
+{
+	if(isset($_POST['submitted']))
+	{
 	      $erros = array(); //intialize error array.
 
-	$isbn = mysqli_real_escape_string($con, trim($_POST['isbn']));
-	if (empty($isbn)) {
-		$errors[] = 'You forget to enter the book isbn.';
-	}
+		$isbn = mysqli_real_escape_string($con, trim($_POST['isbn']));
+		if (empty($isbn)) {
+			$errors[] = 'You forget to enter the book isbn.';
+		}
 
-	$authorfirst = mysqli_real_escape_string($con, trim($_POST['authorfirst']));
-	if (empty($authorfirst)) {
-		$errors[] = 'You forget to enter your Author first name.';
-	}
+		$authorfirst = mysqli_real_escape_string($con, trim($_POST['authorfirst']));
+		if (empty($authorfirst)) {
+			$errors[] = 'You forget to enter your Author first name.';
+		}
 
-	$authorlast = mysqli_real_escape_string($con, trim($_POST['authorlast']));
-	if (empty($authorlast)) {
-		$errors[] = 'You forget to enter your Author last name.';
+		$authorlast = mysqli_real_escape_string($con, trim($_POST['authorlast']));
+		if (empty($authorlast)) {
+			$errors[] = 'You forget to enter your Author last name.';
+		}
+		
+		$title = mysqli_real_escape_string($con, trim($_POST['title']));
+		if(empty($title)) {
+			$errors[] = 'You forgot to enter the Title .';
+		} 
+
+		$price = mysqli_real_escape_string($con, trim($_POST['price']));
+		if(empty($price)) {
+			$errors[] = 'You forgot to enter Price.';
+		}
+
+		if(empty($errors))
+		{ 
+		  $query = "INSERT INTO books (isbn, authorlast, authorfirst, title, price) 
+		  VALUES ('$isbn', '$authorlast','$authorfirst', '$title', '$price')";
+
+		  $result = mysqli_query($con, $query) or die(mysqli_error($con));
+
+		  if($result)
+		  {
+			  echo "<p>Book is added to Database</p>";
+			  echo "<a href=books.php>Books</a>";
+			  exit();
+		  }
+		  else
+		  {
+			  echo "<p>The record could not be added due to a system error" . mysqli_error() . "</p>"; 
+		  }
+
+		}
 	}
 	
-	$title = mysqli_real_escape_string($con, trim($_POST['title']));
-	if(empty($title)) {
-		$errors[] = 'You forgot to enter the Title .';
-	} 
-
-	$price = mysqli_real_escape_string($con, trim($_POST['price']));
-	if(empty($price)) {
-		$errors[] = 'You forgot to enter Price.';
-	}
-
-	if(empty($errors))
-	{ 
-	  $query = "INSERT INTO books (isbn, authorlast, authorfirst, title, price) 
-	  VALUES ('isbn', '$authorlast','$authorfirst', '$title', '$price')";
-
-	  $result = mysqli_query($con, $query) or die(mysqli_error($con));
-
-	  if($result){ //If it ran OK.
-		  echo "<p>User is added to Database</p>";
-		  echo "<a href=books.php>inventory</a>";
-		  exit();
-	  } else { // If it did not run OK
-		  echo "<p>The record could not be added due to a system error" . mysqli_error() . "</p>"; 
-	  }
-
-	} 
-
-}
-	mysqli_close();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -105,7 +108,7 @@ if (!isset($_SESSION['accttype'])){
 				
 				<div class="ui-field-contain">
 					<label for="title">Title: </label>
-					<input type="text" name="Title" id="title" value="<?php echo $_POST['title']; ?>" placeholder="The Wind and willows" data-theme="a" data-clear-btn="true">		
+					<input type="text" name="title" id="title" value="<?php echo $_POST['title']; ?>" placeholder="The Wind and willows" data-theme="a" data-clear-btn="true">		
 				</div>
 				
 				<div class="ui-field-contain">
@@ -119,15 +122,17 @@ if (!isset($_SESSION['accttype'])){
 
 				<center>
 				<?php 
-					if (!empty($errors)) { // Print any error messages.
+					if (!empty($errors))
+					{
 						echo '<h1>Error!</h1>
 						<p>The following error(s) occurred:<br />';
-						foreach ($errors as $msg) { // Print each error.
-						echo "$msg<br />";
+						foreach ($errors as $msg)
+						{
+							echo "$msg<br />";
 						}
-						echo '</p>';
-						echo '<p>Please try again.</p>';
-						}
+							echo '</p>';
+							echo '<p>Please try again.</p>';
+					}
 				?>
 				</center>
 			<!-- end of style div -->
@@ -142,3 +147,7 @@ if (!isset($_SESSION['accttype'])){
  
  </body>
  </html>
+ 
+ <?php
+ }
+ ?>

@@ -15,9 +15,9 @@ if (!isset($_SESSION['accttype'])){
 	<body>
 	<?php
 	if ($result){
-		echo "The selected record has been deleted."; 
+		echo "The selected book has been deleted."; 
 	}else {
-		echo "The selected record could not be deleted."; 
+		echo "The selected book could not be deleted."; 
 	}
 	echo "<p><a href=books.php>Books</a>"; 
 	?>
