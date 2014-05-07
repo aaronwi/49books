@@ -176,9 +176,9 @@ require_once("../../mysqli_connect.php");
 		var isbn = sessionStorage.getItem('isbn');
 		$.post(
 			"../inventory/reservebook.php",
-			{ isbn: isbn }
+			{ isbn: isbn }, function(){
+			location.reload()}
 		);
-
 	});
 </script>
 </body>

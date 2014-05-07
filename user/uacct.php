@@ -194,9 +194,12 @@ USER ACCOUNT PAGE
  <script type="text/javascript">
 	$('#cancelBook').click(function(){
 		var isbn = sessionStorage.getItem('isbn');
-		$.post( "../inventory/cancelbook.php" , { isbn: isbn} );
-		location.reload(true);
+		$.post(
+			"../inventory/cancelbook.php",
+			{ isbn: isbn }, function(){
+			location.reload()}
+		);
 	});
 </script>
- </body>
- </html>
+</body>
+</html>

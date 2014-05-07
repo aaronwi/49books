@@ -85,7 +85,7 @@ if (!isset($_SESSION['accttype'])){
 						echo "<tr><td>".$row['authorlast'].", ".$row['authorfirst']."</td>";
 						echo "<td>".$row['title']."</td>";
 						echo "<td>". number_format($row['price'], 2)."</td>";
-						echo "<td><a href=deletebook.php?isbn=".$row['isbn'].">Delete</a></td></tr>";
+						echo "<td><a href='#delete' data-rel='popup' data-position-to='window' data-transition='pop' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Delete</a></td></tr>";
 						#echo "<td><a href=updateuser.php?isbn=".$row['isbn'].">Update</a></td>";
 					}
 
@@ -93,7 +93,27 @@ if (!isset($_SESSION['accttype'])){
 					mysqli_free_result ($result); // Free up the resources.         
 					mysqli_close($con); // Close the database connection.
 
-				?>	
+				?>
+
+		<div data-role="popup" id="delete" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+		<header data-role="header" data-theme="a"><h6>Fill Book</h6></header>
+		
+		<div role="main" class="ui-content">
+			<h4 class="ui-title">Are you sure you want to fill and delete this book?</h4>
+
+					<center><a href="#" id="deletebook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Delete</a>
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
+					<!--<center>
+					<form id="searchform" action="reserve.php" method="post">
+					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
+					</form>
+					</center>-->
+						
+						
+		</div>
+    </div>				
 	<footer data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false" class="manage-footer ui-grid-c">
 	<div data-role="navbar" class="manage-footer">
             
@@ -106,6 +126,18 @@ if (!isset($_SESSION['accttype'])){
 	</footer>
  </div>
 
+ 
+  <script type="text/javascript">
+	$('#deletebook').click(function(){
+		var isbn = sessionStorage.getItem('isbn');
+		$.post(
+			"deletebook.php",
+			{ isbn: isbn }, function(){
+			location.reload()}
+		);
+	});
+	
+</script>
  <?php
 	}
  ?>
