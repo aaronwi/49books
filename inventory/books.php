@@ -1,7 +1,7 @@
 <?php
 session_start(); 
 
-if (!isset($_SESSION['accttype'])){
+if ($_SESSION['accttype'] != "admin"){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 
@@ -25,10 +25,6 @@ if (!isset($_SESSION['accttype'])){
 
 <body>
 
-<!-------------------------
- INVENTORY PAGE 
- ------------------------->
- 
  <div data-role="page" class="page" id="books">
  <!-- panel menu -->
 	<section data-role="panel" id="panel" data-position="right" data-display="overlay">
@@ -45,7 +41,7 @@ if (!isset($_SESSION['accttype'])){
 	<header data-role="header" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
 			<a href="inventory.php"
-				data-rel="back" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
+				data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
 				class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
 		</div>
 		
@@ -70,11 +66,11 @@ if (!isset($_SESSION['accttype'])){
 					
 					<thead>
 							<tr>							
-								<th data-priority=\"2\">Author Name</th>
-								<th data-priority=\"1\">Book Title</th>
+								<th data-priority=\"1\">Author Name</th>
+								<th data-priority=\"2\">Book Title</th>
 								<th data-priority=\"3\">Price</th>
 								<th>Delete</th>
-								<!--<th>Update</th>-->
+								<th>Update</th>
 							</tr>
 					</thead>					
 					
@@ -85,8 +81,8 @@ if (!isset($_SESSION['accttype'])){
 						echo "<tr><td>".$row['authorlast'].", ".$row['authorfirst']."</td>";
 						echo "<td>".$row['title']."</td>";
 						echo "<td>". number_format($row['price'], 2)."</td>";
-						echo "<td><a href='#delete' data-rel='popup' data-position-to='window' data-transition='pop' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Delete</a></td></tr>";
-						#echo "<td><a href=updateuser.php?isbn=".$row['isbn'].">Update</a></td>";
+						echo "<td><a href='#delete' data-rel='popup' data-position-to='window' data-transition='pop' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Delete</a></td>";
+						echo "<td><a href='updatebook.php?isbn=" .$row['isbn'] . "'>Update</a></td></tr>";
 					}
 
 					echo "</table></center>"; 
@@ -104,23 +100,15 @@ if (!isset($_SESSION['accttype'])){
 
 					<center><a href="#" id="deletebook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Delete</a>
 						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
-					<!--<center>
-					<form id="searchform" action="reserve.php" method="post">
-					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
-					</form>
-					</center>-->
-						
-						
 		</div>
-    </div>				
+    </div>
+
+	
 	<footer data-role="footer" data-position="fixed" data-theme="b" data-tap-toggle="false" class="manage-footer ui-grid-c">
 	<div data-role="navbar" class="manage-footer">
             
             <ul> 
-                <!--<li><input type="button" data-icon="camera" data-iconpos="top" value="scan" /></li>-->
-                <li><a href="addbook.php" data-icon="plus" data-iconpos="top" />add</a></li> 
-     
+                <li><a href="addbook.php" data-icon="plus" data-iconpos="top" />add</a></li>      
             </ul>
 	</div>
 	</footer>

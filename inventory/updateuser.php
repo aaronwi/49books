@@ -1,7 +1,7 @@
 <?php
 session_start(); 
-//check session first
-if (!isset($_SESSION['accttype']))
+
+if ($_SESSION['accttype'] != "admin")
 {
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
@@ -12,7 +12,8 @@ else
     require_once('../../mysqli_connect.php'); 
     $errors = array(); //intialize error array.
 	$user_id = $_SESSION['user_to_edit'];
-	session_start();
+
+	
 	if(isset($_POST['submitted']))
 	{
 		$firstname = mysqli_real_escape_string($con, trim($_POST['firstname']));
@@ -60,21 +61,22 @@ else
 
 		if(empty($errors))
 		{ 
-		  $query = "UPDATE users SET firstname='$firstname', lastname='$lastname', phonenumber='$phonenumber', street='$street', city='$city', state='$state', zip='$zip' WHERE user_id='$user_id' ";
+			
+			$query = "UPDATE users SET firstname='$firstname', lastname='$lastname', phonenumber='$phonenumber', street='$street', city='$city', state='$state', zip='$zip' WHERE user_id='$user_id'";
+			
+			$result = mysqli_query($con, $query) or die(mysqli_error($con));
 
-		  $result = mysqli_query($con, $query) or die(mysqli_error($con));
-
-		  if($result){
-			  header("Location: regusers.php");
-			  //echo "<p>User has been updated in database</p>";
-			  //echo "<a href=regusers.php>inventory</a>";
-			  //exit();
-		  } else {
-			  echo "<p>The record could not be added due to a system error" . mysqli_error() . "</p>"; 
-		  }
-
+			if($result)
+			{
+				header("Location: regusers.php");
+			}
+			else
+			{
+				echo "<p>The record could not be added due to a system error: " . mysqli_error() . "</p>";
+				echo "<a href=regusers.php>Go Back</a>";
+				exit();
+			}
 		} 
-
 	}
 	else //initial load
 	{
@@ -103,13 +105,10 @@ else
 
 <body>
 
-  <!-------------------------
- ADD USERS PAGE 
- ------------------------->
- <div data-role="page" id="adduser" data-theme="a">
-			<!--<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>-->
+
+ <div data-role="page" id="updateuser" data-theme="a">
 			<header data-role="header" data-theme="b">
-				<a href="#" data-rel="back" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
+				<a href="regusers.php" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
 				<h3 align="center">Update User Form</h3>
 			</header>
 			

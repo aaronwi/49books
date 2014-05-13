@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once("../../mysqli_connect.php");
 
@@ -84,8 +83,7 @@ require_once("../../mysqli_connect.php");
 				data-role="button" data-icon="bars" data-iconpos="notext" data-inline="true" 
 				class="ui-nodisc-icon ui-btn-right ui-corner-all" style="background:transparent; margin: 5px 0px;">Menu</a>
 					</div>
-				
-			<!--<span class="ui-title" /> allows button w/in header, no title -->
+
 	</header>
 	
 <!-- Query and show ALL books -->
@@ -109,6 +107,7 @@ require_once("../../mysqli_connect.php");
 				//show results
 				$result = mysqli_query($con, $query);	
 				$num = mysqli_num_rows($result);
+
 				if ($num > 0)
 				{
 					while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -123,7 +122,7 @@ require_once("../../mysqli_connect.php");
 							<p><strong>" . $row['title'] . "</strong></p>
 							<p>by <strong>" . $row['authorlast'] . ", " . $row['authorfirst'] . "</strong></p>
 							<p style='text-align:right; position: relative; bottom: 21.95px; color: #666;'><strong>$" . number_format($row['price'], 2) . "</strong></p></a>
-							<a href='#reserve' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='check' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Reserve Item</a>
+							<a href='#" . (isset($_SESSION['firstname']) ? 'reserve' : 'guestreserve') . "' data-rel='popup' data-position-to='window' data-transition='pop' data-icon='check' onclick='sessionStorage.isbn=" . $row['isbn'] . "'>Reserve Item</a>
 						</li>";
 						}
 				
@@ -148,18 +147,20 @@ require_once("../../mysqli_connect.php");
 			<h4 class="ui-title">Are you sure you want to reserve this book?</h4>
 				<p>You can review all of the books you have reserved by clicking the "Reserved Books" option from the main menu.</p>
 					<center><a href="#" id="reserveBook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Reserve</a>
-						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
-					<!--<center>
-					<form id="searchform" action="reserve.php" method="post">
-					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
-					</form>
-					</center>-->
-						
-						
+						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>	
 		</div>
     </div>
 		
+	<div data-role="popup" id="guestreserve" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+		<header data-role="header" data-theme="a"><h6>Please Sign Up</h6></header>
+		
+		<div role="main" class="ui-content">
+			<h4 class="ui-title">You are not allowed to reserve this item.</h4>
+				<p>Sorry, you must sign up for an account in order to reserve 49 Books &copy; items.</p>
+					<center><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-mini="true" data-transition="flow">Ok</a></center>
+		</div>
+    </div>
 
 <!-- Footer with quick access menu bar -->
 	<footer data-role="footer" data-position="fixed" data-theme="b" >						

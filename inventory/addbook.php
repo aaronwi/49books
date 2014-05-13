@@ -1,17 +1,18 @@
 <?php
 session_start();
-require_once('../../mysqli_connect.php');
 
-if (!isset($_SESSION['accttype']))
+
+if ($_SESSION['accttype'] != "admin")
 {
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 }
 else
 {
+	require_once('../../mysqli_connect.php');
 	if(isset($_POST['submitted']))
 	{
-	      $erros = array(); //intialize error array.
+	    $errors = array(); //intialize error array.
 
 		$isbn = mysqli_real_escape_string($con, trim($_POST['isbn']));
 		if (empty($isbn)) {
@@ -40,24 +41,62 @@ else
 
 		if(empty($errors))
 		{ 
-		  $query = "INSERT INTO books (isbn, authorlast, authorfirst, title, price) 
-		  VALUES ('$isbn', '$authorlast','$authorfirst', '$title', '$price')";
+			$query = "SELECT * FROM books WHERE isbn='$isbn'"; 
+			$result = mysqli_query($con, $query) or die(mysqli_error($con)); // Run the query.
+			if (mysqli_num_rows($result) == 0)
+			{
+				$query = "INSERT INTO books (isbn, authorlast, authorfirst, title, price) 
+				VALUES ('$isbn', '$authorlast','$authorfirst', '$title', '$price')";
 
-		  $result = mysqli_query($con, $query) or die(mysqli_error($con));
+				$result = mysqli_query($con, $query) or die(mysqli_error($con));
 
-		  if($result)
-		  {
-			  echo "<p>Book is added to Database</p>";
-			  echo "<a href=books.php>Books</a>";
-			  exit();
-		  }
-		  else
-		  {
-			  echo "<p>The record could not be added due to a system error" . mysqli_error() . "</p>"; 
-		  }
+			  if($result)
+			  {
 
-		}
+				  echo "
+						<html>
+						<head>
+						<meta charset='utf-8'>
+						<meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width' />
+						<title>49 Books</title>
+
+						<link rel='stylesheet' href='http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css' />
+						<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+						<script src='http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'></script>
+
+						<link rel='stylesheet' href='../css/style.css' type='text/css'/>
+						<link rel='stylesheet' href='../css/small.css' type='text/css' />
+						</head>
+
+						<body>
+						<div data-role='page' class='page' id='addbook'>
+						<div role='success' class='ui-content'>
+									<center><h4 class='ui-title'>Successfully Added Book</h4>
+											<a href='books.php' class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b' data-transition='flow'>Continue</a></center>	
+								</div>
+							</div>
+						</div>	
+						</body>
+						</html>
+						";
+						exit();
+					
+				} else {
+					echo "<p>The record could not be added due to a system error" . mysqli_error() . "</p>"; 
+					echo "<a href=books.php>Go Back</a>";
+				}
+			}
+			else
+			{
+				$errors[] = 'This ISBN already exists in database.';
+			}
+		} // End of If (empty($errors)) 
+	mysqli_close($con);
 	}
+	else
+	{ // Form has not been submitted
+		$errors = NULL;
+	} // End of the main Submitted conditional
 	
 ?>
 <!DOCTYPE html>
@@ -77,13 +116,10 @@ else
 
 <body>
 
-  <!-------------------------
- ADD USERS PAGE 
- ------------------------->
- <div data-role="page" id="adduser" data-theme="a">
-			<!--<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>-->
+
+ <div data-role="page" id="addbook" data-theme="a">
 			<header data-role="header" data-theme="b">
-				<a href="#" data-rel="back" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
+				<a href="books.php" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
 				<h3 align="center">Add Book Form</h3>
 			</header>
 			

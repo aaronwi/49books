@@ -1,7 +1,7 @@
 <?php
 session_start(); 
 //check session first
-if (!isset($_SESSION['accttype'])){
+if ($_SESSION['accttype'] != "admin"){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 
@@ -45,8 +45,8 @@ USERS PAGE
 
 	<header data-role="header" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
-			<a href="#"
-				data-rel="back" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
+			<a href="inventory.php"
+				data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
 				class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
 		</div>
 		
@@ -74,11 +74,11 @@ USERS PAGE
 							echo "<table data-role=\"table\"  data-mode=\"columntoggle\" id=\"books_table\" class=\"ui-responsive table-stripe my-custom-class\"  data-column-btn-theme=\"b\" data-column-btn-text=\"Change data display\" data-column-popup-theme=\"a\">
 							<thead>
 							<tr>							
-								<th data-priority=\"2\">First Name</th>
-								<th data-priority=\"1\">Last Name</th>
+								<th data-priority=\"1\">First Name</th>
+								<th data-priority=\"2\">Last Name</th>
 								<th data-priority=\"3\">Email</th>
 								<th data-priority=\"4\">User Type</th>
-								<th data-priority=\"4\">Phone</th>
+								<th data-priority=\"5\">Phone</th>
 								<th>Delete</th>
 								<th>Update</th>
 							</tr>
@@ -98,8 +98,8 @@ USERS PAGE
 							}
 
 							echo "</table></center>"; 
-							mysqli_free_result ($result); // Free up the resources.         
-							mysqli_close($con); // Close the database connection.
+							mysqli_free_result ($result);        
+							mysqli_close($con);
 						
 						?>
 			</fieldset>

@@ -65,7 +65,8 @@ if (isset($_POST['submitted'])) {
 			//make the query
 			$query = "INSERT INTO users (firstname, lastname, phonenumber, email, street, city, state, zip, password) 
 			VALUES ('$firstname', '$lastname', '$phonenumber', '$email', '$street', '$city', '$state', '$zip', '$md5password')";
-			$result = mysqli_query($con, $query); // Run The query.
+			$result = mysqli_query($con, $query); 
+			
 			if($result){ //If it ran OK.
 				echo "<p>You are now registered. Please, proceed to login.</p>";
 				echo "<a href=index.php>Login</a>";
@@ -78,7 +79,7 @@ if (isset($_POST['submitted'])) {
 			$errors[] = 'The email address has already been registered.';
 		}
 
-	} // End of If (empty($erros)) IF.
+	} // End of If (empty($errors)) 
 
 	mysqli_close($con); //Close the database connection
 
@@ -107,7 +108,7 @@ if (isset($_POST['submitted'])) {
 <body>
 		<div data-role="page" id="signup" data-theme="a" data-ajax="false">
 			<header data-role="header" data-theme="b">
-				<a href="index.php" data-rel="back" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
+				<a href="index.php" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
 				<h3 align="center">Sign Up Form</h3>
 			</header>
 			

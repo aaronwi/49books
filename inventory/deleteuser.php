@@ -1,7 +1,7 @@
 <?php
 session_start(); 
 //check session first
-if ($_SESSION['accttype'] == "admin"){
+if ($_SESSION['accttype'] != "admin"){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 
@@ -13,5 +13,4 @@ if ($_SESSION['accttype'] == "admin"){
 
 	mysqli_close($con);
 }
-
 ?>

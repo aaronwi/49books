@@ -1,10 +1,10 @@
 <?php
+session_start(); 
 
 if (isset($_POST['submitted']))
 {
-	session_start(); 
 	require_once("../../mysqli_connect.php");
-
+	
 	$errors = array(); // Initialize error array.
 
 

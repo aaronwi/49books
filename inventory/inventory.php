@@ -1,7 +1,7 @@
 <?php
 session_start(); 
-//check session first
-if (!isset($_SESSION['accttype'])){
+
+if ($_SESSION['accttype'] != "admin"){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 
@@ -24,15 +24,13 @@ if (!isset($_SESSION['accttype'])){
 </head>
 
 <body>
-<!-----------------------
-ADMIN INVENTORY PAGE 
---------------------------->
+
 <div data-role="page" class="page" id="manage">
 
 	<header data-role="header" id="head4" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
-			<a href="#"
-				data-rel="back" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
+			<a href="../home/userfeed.php"
+				data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
 				class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;">Home</a>
 		</div>
 		
@@ -66,11 +64,7 @@ ADMIN INVENTORY PAGE
 		<h5 role="heading">&copy; 49 Books</h5>
 			</footer>
 </div>
-<!-------------------------
- END ADMIN MAIN INVENTORY PAGE 
- ------------------------->
- 
- 
+
 </body>
 </html>
 <?php

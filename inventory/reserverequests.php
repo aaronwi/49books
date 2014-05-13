@@ -1,7 +1,7 @@
 <?php
 session_start(); 
 
-if (!isset($_SESSION['accttype'])){
+if ($_SESSION['accttype'] != "admin"){
 	echo "You do not have rights to see this page, Please contact your local admin!";
 	exit();
 
@@ -25,24 +25,19 @@ if (!isset($_SESSION['accttype'])){
 
 <body>
 
-
- <!-------------------------
- RESERVED BOOK REQUEST
- -------------------------->
  <div data-role="page" class="page" id="reserverequests">
-	<!-- panel menu -->
+
 	<section data-role="panel" id="panel" data-position="right" data-display="overlay">
 		<ul data-role="listview">
 			<li data-role="list-divider">General</a></li>
 			<li><a href="../home/userfeed.php">Back to 49 Books</a></li>
 		</ul>
 	</section>
-<!-- end of panel menu-->
 
 	<header data-role="header" data-theme="b" class="acct-header-grid ui-grid-b">
 		<div class="ui-block-a">
-			<a href="#"
-				data-rel="back" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
+			<a href="inventory.php"
+				data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true"
 				class="ui-nodisc-icon ui-btn-left ui-corner-all" style="background:transparent; margin: 5px 0px;"></a>
 		</div>
 		
@@ -104,11 +99,7 @@ if (!isset($_SESSION['accttype'])){
 							mysqli_close($con); // Close the database connection.
 
 				?>	
-		<!--<ul> 
-            <li><input type="button" data-icon="edit" data-iconpos="top" value="Mark Filled" /></li> 
-			<li><input type="button" data-icon="forbidden" data-iconpos="top" value="delete" class="delete" /></li> 
-        </ul>-->
-		
+
 			<div data-role="popup" id="cancel" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
 		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
 		<header data-role="header" data-theme="a"><h6>Cancel Book</h6></header>
@@ -118,14 +109,6 @@ if (!isset($_SESSION['accttype'])){
 
 					<center><a href="#" id="cancelBook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Cancel Reservation</a>
 						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
-					<!--<center>
-					<form id="searchform" action="reserve.php" method="post">
-					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
-					</form>
-					</center>-->
-						
-						
 		</div>
     </div>
 	
@@ -138,14 +121,6 @@ if (!isset($_SESSION['accttype'])){
 
 					<center><a href="#" id="deletebook" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Delete</a>
 						<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a></center>
-					<!--<center>
-					<form id="searchform" action="reserve.php" method="post">
-					<input type="submit" value="Reserve" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">
-					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
-					</form>
-					</center>-->
-						
-						
 		</div>
     </div>
 		
@@ -159,12 +134,7 @@ if (!isset($_SESSION['accttype'])){
 	</footer>
  </div>
  </div>
-  <!-------------------------
- END RESERVED BOOK REQUEST
- -------------------------->
 
- 
- 
  <script type="text/javascript">
 	$('#cancelBook').click(function(){
 		var isbn = sessionStorage.getItem('isbn');
@@ -184,16 +154,12 @@ if (!isset($_SESSION['accttype'])){
 			location.reload()}
 		);
 	});
-	
+
 </script>
- </body>
- </html>
- 
+</body>
+</html>
+
  <?php
 	}
  ?>
- <!-------------------------
- END INVENTORY PAGE 
- ------------------------->
- 
 

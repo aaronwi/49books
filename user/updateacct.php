@@ -116,7 +116,6 @@ else
  UPDATE ACCT FORM PAGE 
  ----------------------------->	
 		<div data-role="page" id="update" data-theme="a" data-ajax="false">
-			<!--<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>-->
 			<header data-role="header" data-theme="b">
 				<a href="#" data-rel="back" data-inline="true" data-mini="true" class="ui-btn-left">Cancel</a>
 				<h3 align="center">Update Account</h3>
